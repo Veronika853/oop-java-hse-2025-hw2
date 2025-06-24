@@ -54,6 +54,10 @@ public class Course implements Publishable {
         return students.size();
     }
 
+    public String getCourseName() {
+        return courseName;
+    }
+
     public void showCourseDetails() {
         System.out.println("Курс: " + courseName);
         System.out.println("Преподаватель: " + professor.getDetails());

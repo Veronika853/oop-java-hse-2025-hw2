@@ -40,7 +40,9 @@ public class Main {
 
             University university = new University();
             university.addCourse(course1);
+            university.addCourseToDept("Филология", course2);
             university.addCourse(course2);
+            university.removeCourse(course1);
 
             university.registerStudent(s1);
             university.registerStudent(s2);

@@ -1,12 +1,16 @@
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 
 public class University {
     private ArrayList<Course> courses;
     private HashMap<Integer, Student> studentDirectory;
+    private HashMap<String, LinkedList<Course>> coursesByDept;
 
     public University() {
         courses = new ArrayList<>();
+        coursesByDept = new HashMap<>();
         studentDirectory = new HashMap<>();
     }
 
@@ -16,6 +20,24 @@ public class University {
 
     public void removeCourse(Course course) {
         courses.remove(course);
+    }
+
+    public void addCourseToDept(String deptName, Course c) {
+        LinkedList<Course> deptCourses = coursesByDept.get(deptName);
+        if (deptCourses == null) {
+            deptCourses = new LinkedList<>();
+            coursesByDept.put(deptName, deptCourses);
+        }
+        deptCourses.add(c);
+        System.out.println("Курс \"" + c.getCourseName() + "\" добавлен на кафедру \"" + deptName + "\".");
+    }
+
+    public List<Course> getCoursesForDept(String deptName) {
+        LinkedList<Course> deptCourses = coursesByDept.get(deptName);
+        if (deptCourses == null) {
+            return new LinkedList<>();
+        }
+        return deptCourses;
     }
 
     public void showAllCourses() {
