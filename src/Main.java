@@ -26,6 +26,7 @@ public class Main {
             Student s4 = new Student("Наталья", 2004, "Менеджмент");
             Student s5 = new Student("София", 2005, "Экономика");
             Student s6 = new Student("Алексей", 2006, "Менеджмент");
+            GraduateStudent grad = new GraduateStudent("Анна", 2080, "Экономика", "Динамика акций газового российского рынка");
 
             course1.addStudent(s1);
             course1.addStudent(s3);
@@ -50,9 +51,11 @@ public class Main {
             university.registerStudent(s4);
             university.registerStudent(s5);
             university.registerStudent(s6);
+            university.registerStudent(grad);
 
             try {
                 university.findStudentById(2003);
+                university.findStudentById(2080);
                 university.findStudentById(2010);
             }
             catch (StudentNotFoundException e) {
