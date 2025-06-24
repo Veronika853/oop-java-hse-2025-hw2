@@ -1,12 +1,14 @@
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.List;
 
-public class Course {
+public class Course implements Publishable {
     private String courseName;
     private Professor professor;
     private ArrayList<Student> students;
     private Queue<Student> waitingList;
+    private LinkedList<String> feed;
     private int maxStudents;
 
     public Course(String courseName, Professor professor, int maxStudents) throws InvalidCourseException {
@@ -17,6 +19,7 @@ public class Course {
         this.professor = professor;
         this.students = new ArrayList<>();
         this.waitingList = new LinkedList<>();
+        this.feed = new LinkedList<>();
         this.maxStudents = maxStudents;
     }
 
@@ -62,5 +65,24 @@ public class Course {
             System.out.println(" - " + student.getDetails());
         }
 
+    }
+
+    @Override
+    public void publish(String message) {
+        feed.addLast(message);
+        System.out.println("Новое объявление: " + message);
+    }
+
+    @Override
+    public List<String> getFeed() {
+        return feed;
+    }
+
+    public void showFeed() {
+        if (feed.isEmpty()) {
+            System.out.println("Для курса \"" + courseName + "\" пока нет объявлений.");
+        } else {
+            System.out.println("Все объявления курса \"" + courseName + "\": " + String.join(", ", feed));
+        }
     }
 }

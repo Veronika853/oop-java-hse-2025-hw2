@@ -1,3 +1,5 @@
+import java.util.List;
+
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
@@ -13,6 +15,10 @@ public class Main {
 //            Course course3 = new Course("", prof2);
 //            String newCourseName = null;
 //            Course course4 = new Course(newCourseName, prof2);
+
+            course2.publish("Занятие перенесено на пятницу!");
+            course2.publish("Добавлена новая тема по падежам.");
+            course2.showFeed();
 
             Student s1 = new Student("Дмитрий", 2001, "ПМИ");
             Student s2 = new Student("Дарья", 2002, "Экономика");
