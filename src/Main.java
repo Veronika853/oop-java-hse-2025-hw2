@@ -8,6 +8,9 @@ public class Main {
             Professor prof1 = new Professor("Иван Викторович к.ф.м.н.", 1001, "Компьютерные науки");
             Professor prof2 = new Professor("Алла Ивановна к.ф.н.", 1002, "Филология");
 
+            prof2.scheduleEvent("Заседание кафедры", "2025-09-02 15:00");
+            prof2.scheduleEvent("Консультация по курсу", "2025-09-04 12:00");
+
             Course course1 = new Course("Введение в программирование", prof1, 5);
             Course course2 = new Course("Финский язык", prof2, 3);
 
@@ -16,7 +19,7 @@ public class Main {
 //            String newCourseName = null;
 //            Course course4 = new Course(newCourseName, prof2, 10);
 
-            course2.publish("Занятие перенесено на пятницу!");
+            course2.publish("Занятие 1 перенесено на понедельник!");
             course2.publish("Добавлена новая тема по падежам.");
             course2.showFeed();
 
@@ -44,6 +47,9 @@ public class Main {
 
             course2.removeStudent(s2);
             course2.processWaitingList();
+
+            course2.scheduleEvent("Лекция 1: История и падежи", "2025-09-01 10:00");
+            course2.scheduleEvent("Практика 1: Nominatiivi, Genitiivi", "2025-09-01 11:40");
 
             University university = new University();
             university.addCourse(course1);

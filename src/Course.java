@@ -5,7 +5,7 @@ import java.util.List;
 
 import static java.lang.Math.round;
 
-public class Course implements Publishable {
+public class Course implements Publishable, Schedulable {
     private String courseName;
     private Professor professor;
     private ArrayList<Student> students;
@@ -13,6 +13,7 @@ public class Course implements Publishable {
     private LinkedList<String> feed;
     private int maxStudents;
     private int maxWaitingListSize;
+    private LinkedList<Event> schedule = new LinkedList<>();
 
     public Course(String courseName, Professor professor, int maxStudents) throws InvalidCourseException {
         if (courseName == null || courseName.isEmpty()) {
@@ -76,7 +77,15 @@ public class Course implements Publishable {
         for (Student student: students) {
             System.out.println(" - " + student.getDetails());
         }
-
+        System.out.println("Расписание курса:");
+        if (schedule.isEmpty()) {
+            System.out.println(" - Расписание пока не назначено.");
+        } else {
+            for (Event e : schedule) {
+                System.out.println(" - " + e.getDateTime() + ": " + e.getDescription());
+            }
+        }
+        showFeed();
     }
 
     @Override
@@ -90,11 +99,25 @@ public class Course implements Publishable {
         return feed;
     }
 
+    @Override
+    public void scheduleEvent(String description, String dateTime) {
+        schedule.add(new Event(description, dateTime));
+    }
+
+    @Override
+    public List<Event> getSchedule() {
+        return schedule;
+    }
+
     public void showFeed() {
-        if (feed.isEmpty()) {
+        List<String> announcements = getFeed();
+        if (announcements.isEmpty()) {
             System.out.println("Для курса \"" + courseName + "\" пока нет объявлений.");
         } else {
-            System.out.println("Все объявления курса \"" + courseName + "\": " + String.join(", ", feed));
+            System.out.println("Все объявления курса \"" + courseName + "\":");
+            for (String announcement : announcements) {
+                System.out.println(" - " + announcement);
+            }
         }
     }
 }

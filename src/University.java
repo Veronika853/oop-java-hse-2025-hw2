@@ -7,6 +7,7 @@ public class University {
     private ArrayList<Course> courses;
     private HashMap<Integer, Student> studentDirectory;
     private HashMap<String, LinkedList<Course>> coursesByDept;
+    private HashMap<String, Department> departments;
 
     public University() {
         courses = new ArrayList<>();
@@ -41,6 +42,7 @@ public class University {
     }
 
     public void showAllCourses() {
+        System.out.println();
         System.out.println("Университетские курсы:");
         for (Course course: courses) {
             course.showCourseDetails();
