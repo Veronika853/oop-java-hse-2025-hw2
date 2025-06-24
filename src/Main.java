@@ -28,14 +28,20 @@ public class Main {
             Student s6 = new Student("Алексей", 2006, "Менеджмент");
             GraduateStudent grad = new GraduateStudent("Анна", 2080, "Экономика", "Динамика акций газового российского рынка");
 
-            course1.addStudent(s1);
-            course1.addStudent(s3);
+            try {
+                course1.addStudent(s1);
+                course1.addStudent(s3);
 
-            course2.addStudent(s2);
-            course2.addStudent(s3);
-            course2.addStudent(s4);
-            course2.addStudent(s5);
-            course2.addStudent(s6);
+                course2.addStudent(s2);
+                course2.addStudent(s3);
+                course2.addStudent(s4);
+                course2.addStudent(s5);
+                course2.addStudent(s6);
+            }
+            catch (CourseFullException e) {
+                System.out.println("Ошибка: " + e.getMessage());
+            }
+
             course2.removeStudent(s2);
             course2.processWaitingList();
 
