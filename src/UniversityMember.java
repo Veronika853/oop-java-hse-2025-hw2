@@ -11,4 +11,8 @@ public class UniversityMember implements Person {
     public String getDetails() {
         return "Человек из университета";
     }
+
+    public Integer getId() {
+        return id;
+    }
 }

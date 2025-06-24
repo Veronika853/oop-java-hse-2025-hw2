@@ -12,9 +12,9 @@ public class Main {
             Course course2 = new Course("Финский язык", prof2, 3);
 
 //  тестируем, что ошибка правильно выбрасывается в случае пустого курса:
-//            Course course3 = new Course("", prof2);
+//            Course course3 = new Course("", prof2, 5);
 //            String newCourseName = null;
-//            Course course4 = new Course(newCourseName, prof2);
+//            Course course4 = new Course(newCourseName, prof2, 10);
 
             course2.publish("Занятие перенесено на пятницу!");
             course2.publish("Добавлена новая тема по падежам.");
@@ -23,9 +23,9 @@ public class Main {
             Student s1 = new Student("Дмитрий", 2001, "ПМИ");
             Student s2 = new Student("Дарья", 2002, "Экономика");
             Student s3 = new Student("Диана", 2003, "Менеджмент");
-            Student s4 = new Student("Наталья", 2003, "Менеджмент");
-            Student s5 = new Student("София", 2003, "Экономика");
-            Student s6 = new Student("Алексей", 2003, "Менеджмент");
+            Student s4 = new Student("Наталья", 2004, "Менеджмент");
+            Student s5 = new Student("София", 2005, "Экономика");
+            Student s6 = new Student("Алексей", 2006, "Менеджмент");
 
             course1.addStudent(s1);
             course1.addStudent(s3);
@@ -41,6 +41,22 @@ public class Main {
             University university = new University();
             university.addCourse(course1);
             university.addCourse(course2);
+
+            university.registerStudent(s1);
+            university.registerStudent(s2);
+            university.registerStudent(s3);
+            university.registerStudent(s4);
+            university.registerStudent(s5);
+            university.registerStudent(s6);
+
+            try {
+                university.findStudentById(2003);
+                university.findStudentById(2010);
+            }
+            catch (StudentNotFoundException e) {
+                System.out.println("Ошибка при поиске студента: " + e.getMessage());
+            }
+
 
             university.showAllCourses();
 
