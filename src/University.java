@@ -1,18 +1,21 @@
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 
 public class University {
     private ArrayList<Course> courses;
     private HashMap<Integer, Student> studentDirectory;
-    private HashMap<String, LinkedList<Course>> coursesByDept;
     private HashMap<String, Department> departments;
 
     public University() {
         courses = new ArrayList<>();
-        coursesByDept = new HashMap<>();
         studentDirectory = new HashMap<>();
+        departments = new HashMap<>();
+    }
+
+    public void addDepartment(Department dept) {
+        departments.put(dept.getName(), dept);
+        System.out.println("Кафедра \"" + dept.getName() + "\" добавлена.");
     }
 
     public void addCourse(Course course) {
@@ -23,30 +26,47 @@ public class University {
         courses.remove(course);
     }
 
-    public void addCourseToDept(String deptName, Course c) {
-        LinkedList<Course> deptCourses = coursesByDept.get(deptName);
-        if (deptCourses == null) {
-            deptCourses = new LinkedList<>();
-            coursesByDept.put(deptName, deptCourses);
+    public void addCourseToDept(Department dept, Course c) {
+        if (dept == null || !departments.containsValue(dept)) {
+            System.out.println("Кафедра \"" + (dept != null ? dept.getName() : "null") + "\" не найдена.");
+            return;
         }
-        deptCourses.add(c);
-        System.out.println("Курс \"" + c.getCourseName() + "\" добавлен на кафедру \"" + deptName + "\".");
+        dept.addCourse(c);
     }
 
-    public List<Course> getCoursesForDept(String deptName) {
-        LinkedList<Course> deptCourses = coursesByDept.get(deptName);
-        if (deptCourses == null) {
-            return new LinkedList<>();
+    public List<Course> getCoursesForDept(Department dept) {
+        if (dept != null) {
+            return dept.listCourses();
+        } else {
+            System.out.println("Кафедра \"" + dept.getName() + "\" не найдена.");
+            return new ArrayList<>();
         }
-        return deptCourses;
     }
 
     public void showAllCourses() {
-        System.out.println();
-        System.out.println("Университетские курсы:");
-        for (Course course: courses) {
-            course.showCourseDetails();
-            System.out.println("--------------------------");
+        if (departments.isEmpty()) {
+            System.out.println("В университете пока нет кафедр.");
+            return;
+        }
+        System.out.println("Курсы университета по кафедрам:");
+        for (Department dept : departments.values()) {
+            System.out.println("Кафедра: " + dept.getName());
+            Professor head = dept.getHead();
+            if (head != null) {
+                System.out.println("Заведующий кафедры: " + head.getDetails());
+            } else {
+                System.out.println("Заведующий кафедры не назначен.");
+            }
+
+            List<Course> deptCourses = dept.listCourses();
+            if (deptCourses.isEmpty()) {
+                System.out.println("Нет курсов.");
+            } else {
+                for (Course c : deptCourses) {
+                    c.showCourseDetails();
+                }
+            }
+            System.out.println("---------------------------");
         }
 
     }

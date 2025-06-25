@@ -2,10 +2,10 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class Professor extends UniversityMember implements Schedulable {
-    private String department;
+    private Department department;
     private LinkedList<Event> schedule = new LinkedList<>();
 
-    public Professor(String name, int id, String department) {
+    public Professor(String name, int id, Department department) {
         super(name, id);
         this.department = department;
     }
@@ -13,6 +13,7 @@ public class Professor extends UniversityMember implements Schedulable {
     @Override
     public void scheduleEvent(String description, String dateTime) {
         schedule.add(new Event(description, dateTime));
+        System.out.println("Профессор " + name + " запланировал событие: \"" + description + "\" на " + dateTime);
     }
 
     @Override
@@ -22,6 +23,6 @@ public class Professor extends UniversityMember implements Schedulable {
 
     @Override
     public String getDetails() {
-        return "ID преподавателя: " + id + ", Имя: " + name + ", кафедра: " + department;
+        return "ID преподавателя: " + id + ", Имя: " + name + ", кафедра: " + department.getName();
     }
 }

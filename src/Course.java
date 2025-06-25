@@ -29,18 +29,36 @@ public class Course implements Publishable, Schedulable {
     }
 
     public void addStudent(Student student) throws CourseFullException {
-        if (students.size() < maxStudents) {
-            students.add(student);
-            System.out.println(student.getDetails() + " зачислен(а) на курс \"" + courseName + "\".");
-        } else if (waitingList.size() < maxWaitingListSize) {
-            waitingList.add(student);
-            System.out.println(student.getDetails() + " зачислен(а) в список ожидания курса \"" + courseName + "\".");
-        } else {
-            throw new CourseFullException("На курсе \"" + courseName + "\" не осталось мест");
+        if (student == null) {
+            System.out.println("Ошибка: Студент не может быть null.");
+            return;
+        }
+        try {
+            if (students.size() < maxStudents) {
+                students.add(student);
+                System.out.println(student.getDetails() + " зачислен(а) на курс \"" + courseName + "\".");
+            } else if (waitingList.size() < maxWaitingListSize) {
+                waitingList.add(student);
+                System.out.println(student.getDetails() + " зачислен(а) в список ожидания курса \"" + courseName + "\".");
+            } else {
+                throw new CourseFullException("На курсе \"" + courseName + "\" не осталось мест для студента " + student.getDetails() + ".");
+            }
+            processWaitingList();
+        } catch (CourseFullException e) {
+            System.out.println("Ошибка: " + e.getMessage());
         }
     }
 
+    public void removeStudent(Student student) {
+        boolean removed = students.remove(student) || waitingList.remove(student);
+        if (removed) {
+            System.out.println(student.getDetails() + " удален(а) из курса \"" + courseName + "\".");
+        } else {
+            System.out.println("Студент " + student.getDetails() + " не найден на курсе \"" + courseName + "\".");
+        }
 
+        processWaitingList();
+    }
 
     public void processWaitingList() {
         while (!waitingList.isEmpty() && students.size() < maxStudents) {
@@ -52,11 +70,6 @@ public class Course implements Publishable, Schedulable {
 
     public int getWaitingListSize() {
         return waitingList.size();
-    }
-
-    public void removeStudent(Student student) {
-        students.remove(student);
-        System.out.println(student.getDetails() + " удален(а) с курса \"" + courseName + "\".");
     }
 
     public int getNumberOfStudents() {
@@ -91,7 +104,7 @@ public class Course implements Publishable, Schedulable {
     @Override
     public void publish(String message) {
         feed.addLast(message);
-        System.out.println("Новое объявление: " + message);
+        System.out.println("Новое объявление на курсе " + courseName + ": " + message);
     }
 
     @Override
@@ -102,6 +115,7 @@ public class Course implements Publishable, Schedulable {
     @Override
     public void scheduleEvent(String description, String dateTime) {
         schedule.add(new Event(description, dateTime));
+        System.out.println("На курсе " + courseName + " запланировано событие: \"" + description + "\" на " + dateTime);
     }
 
     @Override

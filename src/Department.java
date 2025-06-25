@@ -15,7 +15,7 @@ public class Department implements Departmental {
     @Override
     public void addCourse(Course c) {
         courses.add(c);
-        System.out.println("Курс \"" + c.getCourseName() + "\" добавлен в кафедру \"" + name + "\".");
+        System.out.println("Курс \"" + c.getCourseName() + "\" добавлен на кафедру \"" + name + "\".");
     }
 
     @Override
@@ -34,6 +34,10 @@ public class Department implements Departmental {
 
     public String getName() {
         return name;
+    }
+
+    public void setHead(Professor head) {
+        this.head = head;
     }
 
     public Professor getHead() {
