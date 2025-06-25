@@ -1,4 +1,8 @@
-
+/**
+ * Главный класс приложения, демонстрирующий функциональность университетской системы.
+ * Создаёт университет, кафедры, профессоров, курсы и студентов, а также выполняет операции
+ * добавления, удаления и вывода информации о курсах и студентах.
+ */
 public class Main {
     public static void main(String[] args) {
         try {
@@ -27,7 +31,10 @@ public class Main {
             System.out.println("Добавляем курсы, расписание и новости:");
             Course course1 = new Course("Введение в программирование", prof1, 5);
             Course course2 = new Course("Финский язык", prof2, 3);
-            Course course3 = new Course("Дискретная математика", prof1, 5);
+            Course course3 = new Course("Дискретная математика", null, 5);
+            Course course4 = new Course("Линейная алгебра", null, 2);
+
+            course3.setProfessor(prof1);
 
             course2.scheduleEvent("Лекция 1: История и падежи", "2025-09-01 10:00");
             course2.scheduleEvent("Практика 1: Nominatiivi, Genitiivi", "2025-09-01 11:40");
@@ -48,24 +55,18 @@ public class Main {
             Student s7 = new Student("Степан", 2007, "ПМИ");
             GraduateStudent grad = new GraduateStudent("Анна", 2080, "Экономика", "Динамика акций газового российского рынка");
 
-            try {
-                course1.addStudent(s1);
-                course1.addStudent(s3);
-                course2.addStudent(s2);
-                course2.addStudent(s3);
-                course2.addStudent(s4);
-                course2.addStudent(s5);
-                course2.removeStudent(s2);
-                course2.addStudent(s6);
-                course2.addStudent(s7);
-                course3.addStudent(s1);
-                course3.addStudent(s2);
 
-            }
-            catch (CourseFullException e) {
-                System.out.println("Ошибка: " + e.getMessage());
-            }
-
+            course1.addStudent(s1);
+            course1.addStudent(s3);
+            course2.addStudent(s2);
+            course2.addStudent(s3);
+            course2.addStudent(s4);
+            course2.addStudent(s5);
+            course2.removeStudent(s2);
+            course2.addStudent(s6);
+            course2.addStudent(s7);
+            course3.addStudent(s1);
+            course3.addStudent(s2);
 
 
             System.out.println();
@@ -73,6 +74,7 @@ public class Main {
             university.addCourse(course1);
             university.addCourse(course2);
             university.addCourse(course3);
+            university.addCourse(course4);
             university.addCourseToDept(dept1, course1);
             university.addCourseToDept(dept2, course2);
             university.addCourseToDept(dept1, course3);
@@ -93,8 +95,7 @@ public class Main {
                 university.findStudentById(2003);
                 university.findStudentById(2080);
                 university.findStudentById(2010);
-            }
-            catch (StudentNotFoundException e) {
+            } catch (StudentNotFoundException e) {
                 System.out.println("Ошибка при поиске студента: " + e.getMessage());
             }
 
